@@ -1,0 +1,9 @@
+[logger]
+level = "info"
+
+[client]
+showErrorDetails = true
+
+[server]
+runOnSave = true
+maxUploadSize = 200

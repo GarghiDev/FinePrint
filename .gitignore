@@ -1,0 +1,37 @@
+# Only track essential files for deployment
+# Track: agents/, data/, retrieval/, app.py, requirements.txt, .streamlit/config.toml
+
+# Ignore everything by default
+*
+
+# Then explicitly allow what we want
+!.gitignore
+!agents/
+!agents/**
+!data/
+!data/**
+!retrieval/
+!retrieval/**
+!app.py
+!requirements.txt
+!.streamlit/
+!.streamlit/config.toml
+
+# Always ignore these
+.env
+.env.local
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+venv/
+env/
+ENV/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.ruff_cache/
+.streamlit/secrets.toml
+.streamlit/cache/
