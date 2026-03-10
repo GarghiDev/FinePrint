@@ -2,6 +2,8 @@
 
 A sophisticated RAG (Retrieval-Augmented Generation) system that reads privacy policies from TikTok, Meta, and Spotify, and answers user questions with verified, hallucination-checked responses.
 
+## 🔗 [Try the Live Demo](https://fineprint-nhxevvabzjbcnfwz2wifce.streamlit.app/)
+
 ## Features
 
 - **Hybrid Retrieval**: Combines BM25 keyword search and FAISS vector search for optimal accuracy
