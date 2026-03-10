@@ -214,6 +214,41 @@ def main():
     # Main chat interface
     st.markdown("---")
 
+    # Show sample questions if no chat history
+    if not st.session_state.chat_history:
+        st.markdown("### 💡 Try asking:")
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            if st.button("📊 What data is collected?", use_container_width=True):
+                sample_query = (
+                    "What personal data does this company collect from users?"
+                )
+                st.session_state.chat_history.append(
+                    {"role": "user", "content": sample_query}
+                )
+                st.rerun()
+
+        with col2:
+            if st.button("🔒 How is my data protected?", use_container_width=True):
+                sample_query = "How does this company protect my personal data and ensure security?"
+                st.session_state.chat_history.append(
+                    {"role": "user", "content": sample_query}
+                )
+                st.rerun()
+
+        with col3:
+            if st.button(
+                "🤝 Is data shared with third parties?", use_container_width=True
+            ):
+                sample_query = "Does this company share my data with third parties?"
+                st.session_state.chat_history.append(
+                    {"role": "user", "content": sample_query}
+                )
+                st.rerun()
+
+        st.markdown("---")
+
     # Display chat history
     for message in st.session_state.chat_history:
         with st.chat_message(message["role"]):
@@ -221,6 +256,16 @@ def main():
                 st.write(message["content"])
             else:
                 display_result(message["result"])
+
+    # Check if we need to process a question (from sample buttons or chat input)
+    process_query = None
+
+    # Check if last message is a user message without a response
+    if (
+        st.session_state.chat_history
+        and st.session_state.chat_history[-1]["role"] == "user"
+    ):
+        process_query = st.session_state.chat_history[-1]["content"]
 
     # Chat input
     if prompt := st.chat_input("Ask a question about the privacy policy..."):
@@ -230,9 +275,12 @@ def main():
 
         # Add user message
         st.session_state.chat_history.append({"role": "user", "content": prompt})
+        process_query = prompt
 
+    # Process the query if there is one
+    if process_query:
         with st.chat_message("user"):
-            st.write(prompt)
+            st.write(process_query)
 
         # Process query
         with st.chat_message("assistant"):
@@ -246,7 +294,7 @@ def main():
                 )
 
                 # Run workflow
-                result = workflow.run(prompt)
+                result = workflow.run(process_query)
 
                 # Display result
                 display_result(result)
